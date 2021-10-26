@@ -1,0 +1,15 @@
+{
+  "name": "week1-node",
+  "version": "0.0.1",
+  "description": "A modern JavaScript utility library delivering modularity, performance & extras",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon script.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+	"lodash": "4.17.21"
+  }
+}
