@@ -1,5 +1,19 @@
-html
-  head
-    title= title
-  body
-    h1= message
+<!DOCTYPE html>
+html(lang="en")
+
+head
+	meta(charset="UTF-8")
+	title Title
+	link(href="./css/style.css" rel="stylesheet")
+
+body
+	h1 Click on the cat
+	article
+		header
+			h2 #{name}
+		figure
+			img(src="./img/cat.jpg" class="big small trans")
+		p Age: #{age}
+		p Weight #{weight}kg
+
+	script(src="./js/main.js")
