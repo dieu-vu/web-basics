@@ -1,13 +1,16 @@
 'use strict';
+const pug = require('pug');
 const express = require('express');
 const app = express();
 const port = 3000;
 
-app.use(express.static('public'));
+app.set('view engine', 'pug')
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
+
+app.get('/', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!' })
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
