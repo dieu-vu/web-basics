@@ -7,3 +7,7 @@ web_modules/
 *.env
 
 *.stackdump
+
+#week2
+week2/.gitignore
+week2/README.md
