@@ -18,7 +18,11 @@ const cats = [
   },
 ];
 
+const getCat = (catId) => {
+	return cats.filter(cat => cat.id === catId);
+};
 
 module.exports = {
-  cats,
+	cats,
+	getCat,
 };

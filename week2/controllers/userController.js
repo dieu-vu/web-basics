@@ -1,16 +1,22 @@
 
 'use strict';
 // userController
-const userModel = require('../models/userModel');
+const userModel = require('../models/userModel.js');
 
 const users = userModel.users;
 
 const user_list_get = (req, res) => {
-	res.json(users);
+	const newUsers = users.map((user)=> {
+		delete user.password;
+		return user;
+	});
+	res.json(newUsers);
 };
 
 const user_get = (req, res) => {
-	res.json(users.filter(user => user.id === req.params.id));
+	const user = getUser(req.params.id);
+	delete user.password;
+	res.json(user);
 };
 
 module.exports = {
