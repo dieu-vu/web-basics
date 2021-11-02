@@ -6,6 +6,7 @@ const catController = require('../controllers/catController.js');
 
 router.get('/', catController.cat_list_get);
 
+
 router.get('/cat', (req,res) => {
 	res.send('From this endpoint you can get cats.');
 });
@@ -20,8 +21,6 @@ router.delete('/cat', (req, res) => {
 	res.send('With this endpoint you can delete cats.');
 });
 
-router.get('/cat/:id', (req,res) => {
-	console.log('/cat route', req.params);
-	res.send(`From this endpoint you can get a specific cat from catID :${req.params.id}`);
-});
+router.get('/cat/:id', catController.cat_get);
+
 module.exports = router;
