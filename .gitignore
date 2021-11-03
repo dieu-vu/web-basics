@@ -13,4 +13,4 @@ week2/.gitignore
 week2/README.md
 
 !uploads/.gitkeep
-uploads/*
+week2/uploads/*
