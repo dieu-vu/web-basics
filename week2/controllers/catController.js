@@ -9,10 +9,15 @@ const cat_list_get = (req, res) => {
 };
 
 const cat_get = (req, res) => {
-	res.json(cats.filter(cat => cat.id === req.params.id));
+	res.json(catModel.getCat(req.params.id));
 };
 
+const cat_post = (req, res) => {
+	console.log('add cat data');
+	res.send('From this end point you can add cats.');
+};
 module.exports = {
 	cat_list_get,
-	cat_get
+	cat_get,
+	cat_post,
 };
