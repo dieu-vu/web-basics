@@ -14,6 +14,7 @@ const cat_get = (req, res) => {
 
 const cat_post = (req, res) => {
 	console.log('add cat data');
+	console.log(req.file, req.body);
 	res.send('From this end point you can add cats.');
 };
 module.exports = {
