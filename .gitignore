@@ -11,3 +11,6 @@ web_modules/
 #week2
 week2/.gitignore
 week2/README.md
+
+week2/uploads/*
+!week2/uploads/.gitkeep
