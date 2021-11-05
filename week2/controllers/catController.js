@@ -23,13 +23,22 @@ const cat_post = async (req, res) => {
 };
 
 const cat_delete = async (req, res) => {
-	const cat = req.params.id
-	const id = await catModel.deleteCat(catId);
+	const cat = req.body;
+	const id = await catModel.deleteCat(cat.id);
 	res.send(`removed catId ${id}`);
+};
+
+const cat_update_put = async (req, res) => {
+	const cat = req.body;
+	const updated = await catModel.modifyCat(cat);
+	console.log(req.body, req.file);
+	res.send(updated);
 };
 	
 module.exports = {
 	cat_list_get,
 	cat_get,
-	cat_post
+	cat_post,
+	cat_delete,
+	cat_update_put,
 };

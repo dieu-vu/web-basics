@@ -10,14 +10,9 @@ router.get('/', catController.cat_list_get);
 
 router.post('/', upload.single('cat'), catController.cat_post);
 
+router.put('/', catController.cat_update_put);
 
-
-router.put('/cat', (req, res) => {
-	res.send('With this endpoint you can edit cats.'); 
-});
-router.delete('/cat', (req, res) => {
-	res.send('With this endpoint you can delete cats.');
-});
+router.delete('/:id', catController.cat_delete); 
 
 router.get('/:id', catController.cat_get);
 

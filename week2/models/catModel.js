@@ -7,7 +7,7 @@ const getAllCats = async () => {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
 	const queryString = `SELECT
 		c.*,
-		u.name AS owner
+		u.name AS ownername
 		FROM
 		wop_cat AS c
 		LEFT JOIN wop_user AS u
@@ -44,18 +44,33 @@ const insertCat = async (cat) => {
 	};
 };
 
-const deleteCat = async (cat) => {
+const deleteCat = async (catId) => {
 	try {
 		const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ?', [catId]);
-		console.log('modeld delete cat', row);
+		console.log('model delete cat', row);
 		return row.affectedRows === 1;
 	} catch (e) {
 		console.error('model delete cat', e.message);
 	}
 }
 
+const modifyCat = async (cat) => {
+	try {
+		let birthdate = (cat.birthdate).toString().substring(0,10);
+		console.log("BIRTHDATE", birthdate);
+		const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate = ? WHERE cat_id = ?',
+			[cat.name, cat.weight, cat.owner, birthdate, cat.id]);
+		console.log('model modify cat',  row);
+		return row.affectedRows === 1;
+	} catch (e) {
+		console.error('model modify cat', e.message);
+	};
+};
+
 module.exports = {
 	getAllCats,
 	getCat,
 	insertCat,
+	deleteCat,
+	modifyCat,
 };
