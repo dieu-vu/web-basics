@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController.js');
 
-router.get('/user', userController.user_list_get);
+router.get('/', userController.user_list_get);
 
 
 router.get('/:id', userController.user_get);
