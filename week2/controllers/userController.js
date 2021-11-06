@@ -19,9 +19,11 @@ const user_get = async (req, res) => {
 	res.json(user);
 };
 
-const user_post = (req, res) => {
+const user_post = async (req, res) => {
 	console.log('add user data');
-	res.send('From this end point you can add users.');
+	const user = req.body;
+	const userAdded = await userModel.insertUser(user);
+	res.send(userAdded);
 };
 
 module.exports = {

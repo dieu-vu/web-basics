@@ -52,7 +52,7 @@ const deleteCat = async (catId) => {
 	} catch (e) {
 		console.error('model delete cat', e.message);
 	}
-}
+};
 
 const modifyCat = async (cat) => {
 	try {
