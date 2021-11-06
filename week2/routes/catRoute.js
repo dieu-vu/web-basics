@@ -6,14 +6,12 @@ const catController = require('../controllers/catController.js');
 const multer = require('multer');
 const upload = multer({dest:'./uploads/'});
 
-router.get('/', catController.cat_list_get);
-
-router.post('/', upload.single('cat'), catController.cat_post);
-
-router.put('/', catController.cat_update_put);
-
-router.delete('/:id', catController.cat_delete); 
-
-router.get('/:id', catController.cat_get);
+router.route('/')
+	.get(catController.cat_list_get)
+	.post(upload.single('cat'), catController.cat_post)
+	.put(catController.cat_update_put);
+router.route('/:id')
+	.get(catController.cat_get)
+	.delete(catController.cat_delete);
 
 module.exports = router;
