@@ -2,6 +2,7 @@
 // catController
 const catModel = require('../models/catModel.js');
 const {httpError} = require('../utils/errors');
+const { body, validationResult } = require('express-validator');
 
 const cat_list_get = async (req, res) => {
 	const cats = await catModel.getAllCats();
@@ -25,7 +26,20 @@ const cat_get = async (req, res, next) => {
 };
 
 const cat_post = async (req, res) => {
+	
+	const errors = validationResult(req);
+	if (!errors.isEmpty()){
+		console.error('invalid_cat_input', errors.array());
+		const err = httpError('data not valid', 400);
+		next(err);
+		return;
+	};
 	console.log('add cat data');
+	if(!req.file){
+		const err = httpError('Invalid file', 400);
+		next(err);
+		return;
+	}
 	const cat = req.body;
 	cat.filename = req.file.filename;
 	const id = await catModel.insertCat(cat);

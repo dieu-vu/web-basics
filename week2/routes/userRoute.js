@@ -4,10 +4,14 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController.js');
+const { body, validationResult } = require('express-validator');
 
 router.route('/')
 	.get(userController.user_list_get)
-	.post(userController.user_post);
+	.post(body('name').isLength({min: 3}),
+		body('email').isEmail(),
+		body('passwd').matches('(?=.*[A-Z]).{8,}'),
+		userController.user_post);
 
 router.route('/:id')
 	.get(userController.user_get);
