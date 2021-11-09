@@ -21,9 +21,9 @@
             <div class="form-wrapper">
                 <h3>Add user</h3>
                 <form action="http://localhost:3000/user" method="post" class="light-border" id="addUserForm">
-                    <input class="light-border" type="text" name="name" placeholder="Name">
-                    <input class="light-border" type="text" name="email" placeholder="email">
-                    <input class="light-border" type="text" name="passwd" placeholder="Password">
+                    <input class="light-border" type="text" required="required" minlength="3" name="name" placeholder="Name">
+                    <input class="light-border" type="text" name="email" required placeholder="email">
+                    <input class="light-border" type="text" name="passwd" required minlength="8" pattern="(?=.*[A-Z]).{8,}" placeholder="Password">
                     <button class="light-border" type="submit">Save</button>
                 </form>
             </div>
