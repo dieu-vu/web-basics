@@ -25,7 +25,7 @@ const cat_get = async (req, res, next) => {
 	res.json(cat);
 };
 
-const cat_post = async (req, res) => {
+const cat_post = async (req, res, next) => {
 	
 	const errors = validationResult(req);
 	if (!errors.isEmpty()){

@@ -14,7 +14,7 @@ const getAllCats = async () => {
 		ON
 		c.owner = u.user_id` 
     const [rows] = await promisePool.query(queryString);
-	console.log(rows)
+	//console.log(rows)
     return rows;
   } catch (e) {
 		console.error('error', e.message);

@@ -8,8 +8,8 @@ const { body, validationResult } = require('express-validator');
 
 router.route('/')
 	.get(userController.user_list_get)
-	.post(body('name').isLength({min: 3}),
-		body('email').isEmail(),
+	.post(body('name').isLength({min: 3}).trim().escape(),
+		body('email').isEmail().normalizeEmail(),
 		body('passwd').matches('(?=.*[A-Z]).{8,}'),
 		userController.user_post);
 

@@ -17,16 +17,16 @@ const upload = multer({dest:'./uploads/', fileFilter});
 router.route('/')
 	.get(catController.cat_list_get)
 	.post(upload.single('cat'),
-		body('name').notEmpty(),
-		body('birthdate').isDate().isLength({min: 1}),
-		body('weight').isNumeric().isLength({min: 1}),
-		body('owner').isLength({min: 1}),
+		body('name').not().isEmpty(),
+		body('birthdate').isDate().not().isEmpty(),
+		body('weight').isNumeric().not().isEmpty(),
+		body('owner').not().isEmpty(),
 		catController.cat_post)
 	.put(
-		body('name').isLength({min: 1}),
-		body('birthdate').isDate().isLength({min: 1}),
-		body('weight').isNumeric().isLength({min: 1}),
-		body('owner').isLength({min: 1}),
+		body('name').not().isEmpty(),
+		body('birthdate').isDate().not().isEmpty(),
+		body('weight').isNumeric().not().isEmpty(),
+		body('owner').not().isEmpty(),
 		catController.cat_update_put);
 router.route('/:id')
 	.get(catController.cat_get)
