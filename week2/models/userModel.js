@@ -2,6 +2,18 @@
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
+const getUserLogin = async (params) => {
+  try {
+    console.log(params);
+    const [rows] = await promisePool.execute(
+        'SELECT * FROM wop_user WHERE email = ?;',
+        params);
+    return rows;
+  } catch (e) {
+    console.log('error', e.message);
+  }
+};
+
 const getAllUsers = async () => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
@@ -41,4 +53,5 @@ module.exports = {
 	getAllUsers, 
 	getUser,
 	insertUser,
+	getUserLogin,
 };

@@ -4,16 +4,21 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const {httpError} = require('./utils/errors');
+const passport = require('./utils/pass');
+const authRoute = require('./routes/authRoute.js');
 
 app.use(cors());
+app.use(passport.initialize());
+
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 
 var cats = require('./routes/catRoute.js');
 var users = require('./routes/userRoute.js');
 
-app.use('/cat', cats);
-app.use('/user',users);
+app.use('/auth', authRoute);
+app.use('/cat', passport.authenticate('jwt', {session: false}), cats);
+app.use('/user', passport.authenticate('jwt', {session: false}), users);
 
 //Handle error 
 app.use((req, res, next) => {
