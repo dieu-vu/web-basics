@@ -4,8 +4,8 @@ const catModel = require('../models/catModel.js');
 const {httpError} = require('../utils/errors');
 const { body, validationResult } = require('express-validator');
 
-const cat_list_get = async (req, res) => {
-	const cats = await catModel.getAllCats();
+const cat_list_get = async (req, res, next) => {
+	const cats = await catModel.getAllCats(req.user);
 	if (cats.length > 0) {
 		res.json(cats);
 		return

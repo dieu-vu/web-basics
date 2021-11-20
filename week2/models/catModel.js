@@ -2,7 +2,7 @@
 const pool = require('../database/db');
 const promisePool = pool.promise();
 
-const getAllCats = async () => {
+const getAllCats = async (user) => {
   try {
     // TODO: do the LEFT (or INNER) JOIN to get owner's name as ownername (from wop_user table).
 	const queryString = `SELECT
@@ -12,8 +12,9 @@ const getAllCats = async () => {
 		wop_cat AS c
 		LEFT JOIN wop_user AS u
 		ON
-		c.owner = u.user_id` 
-    const [rows] = await promisePool.query(queryString);
+		c.owner = u.user_id
+	  	WHERE c.owner = ?`
+    const [rows] = await promisePool.query(queryString, [user.user_id]);
 	//console.log(rows)
     return rows;
   } catch (e) {
