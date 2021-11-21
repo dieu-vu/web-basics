@@ -12,6 +12,7 @@ const createCatCards = (cats) => {
     // create li with DOM methods
     const img = document.createElement('img');
     img.src = url + '/' + cat.filename;
+	if (cat.filename.includes("http")) { img.src = cat.filename};
     img.alt = cat.name;
     img.classList.add('resp');
 

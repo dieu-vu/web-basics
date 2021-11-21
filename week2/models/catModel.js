@@ -47,8 +47,16 @@ const insertCat = async (cat) => {
 };
 
 const deleteCat = async (catId, userId) => {
+//Query user's role:
+	const [users] = await promisePool.query(`SELECT role FROM wop_user WHERE user_id = ?`, [userId]);
+	const user_role = users[0].role;	
+	console.log("USER_ROLE", user_role);
 	try {
-		const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ? AND owner = ?', [catId, userId]);
+		if (user_role === 0){
+			const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ?', [catId]);
+		} else {
+			const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ? AND owner = ?', [catId, userId]);
+		}
 		console.log('model delete cat', row);
 		return row.affectedRows === 1;
 	} catch (e) {
@@ -60,8 +68,20 @@ const modifyCat = async (cat) => {
 	try {
 		let birthdate = (cat.birthdate).toString().substring(0,10);
 		console.log("BIRTHDATE", birthdate);
-		const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, birthdate = ? WHERE cat_id = ? AND owner = ?',
-			[cat.name, cat.weight, birthdate, parseInt(cat.id), cat.owner]);
+		
+//Query user's role:
+		const [users] = await promisePool.query(`SELECT role FROM wop_user WHERE user_id = ?`, [cat.owner]);
+		const user_role = users[0].role;	
+		console.log("USER_ROLE", user_role);
+
+//If user is admin, can edit without checking owner matching with user_id:		
+		if (user_role == 0){
+			const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, birthdate = ? WHERE cat_id = ?',
+				[cat.name, cat.weight, birthdate, parseInt(cat.id)]);
+		} else { 
+			const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, birthdate = ? WHERE cat_id = ? AND owner = ?',
+				[cat.name, cat.weight, birthdate, parseInt(cat.id), cat.owner]);
+		}
 		console.log('model modify cat',  row);
 		return row.affectedRows === 1;
 	} catch (e) {

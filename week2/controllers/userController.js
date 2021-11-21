@@ -17,7 +17,7 @@ const user_list_get = async (req, res) => {
 
 const user_get = async (req, res) => {
 	const user = await userModel.getUser(req.params.id);
-	delete user.password;
+	//delete user.password;
 	res.json(user);
 };
 
