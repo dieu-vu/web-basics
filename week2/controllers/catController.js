@@ -26,7 +26,6 @@ const cat_get = async (req, res, next) => {
 		return; //stop the function so that we won't send res twice and get errors
 	};
 	console.log("cat owner:", cat.owner);
-	console.log("user:", current_user.user_id);
 	res.json(cat);
 };
 
@@ -63,10 +62,12 @@ const cat_delete = async (req, res) => {
 const cat_update_put = async (req, res) => {
 	const cat = req.body;
 	console.log('CAT_PUT', cat);
-	const updated = await catModel.modifyCat(cat, req.user);
+	cat.id = req.params.id;
+	cat.owner = req.user.user_id;
+	const updated = await catModel.modifyCat(cat);
+	console.log("USER_PUT", req.user.user_id);
 	console.log(req.body, req.file);
 	console.log("cat owner in put method", cat.owner)
-	console.log("user in put method", current_user.user_id);
 	res.send(updated);
 };
 	

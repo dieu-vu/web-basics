@@ -56,12 +56,12 @@ const deleteCat = async (catId, userId) => {
 	}
 };
 
-const modifyCat = async (cat, user) => {
+const modifyCat = async (cat) => {
 	try {
 		let birthdate = (cat.birthdate).toString().substring(0,10);
 		console.log("BIRTHDATE", birthdate);
-		const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate = ? WHERE cat_id = ? ',
-			[cat.name, cat.weight, cat.owner, birthdate, cat.id, user.user_id]);
+		const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, birthdate = ? WHERE cat_id = ? AND owner = ?',
+			[cat.name, cat.weight, birthdate, parseInt(cat.id), cat.owner]);
 		console.log('model modify cat',  row);
 		return row.affectedRows === 1;
 	} catch (e) {

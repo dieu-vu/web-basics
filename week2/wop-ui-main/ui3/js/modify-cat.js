@@ -93,8 +93,6 @@ modForm.addEventListener('submit', async (evt) => {
   const json = await response.json();
   if (json.error) {
     alert(json.error.message);
-  } else {
-    alert(json.message);
   }
   location.href = 'front.html';
 });

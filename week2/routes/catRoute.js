@@ -22,14 +22,13 @@ router.route('/')
 		body('weight').isNumeric().not().isEmpty(),
 		body('owner').not().isEmpty(),
 		catController.cat_post)
+router.route('/:id')
+	.get(catController.cat_get)
+	.delete(catController.cat_delete)
 	.put(
 		body('name').not().isEmpty(),
 		body('birthdate').isDate().not().isEmpty(),
 		body('weight').isNumeric().not().isEmpty(),
-		body('owner').not().isEmpty(),
 		catController.cat_update_put);
-router.route('/:id')
-	.get(catController.cat_get)
-	.delete(catController.cat_delete);
 
 module.exports = router;
