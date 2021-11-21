@@ -3,8 +3,11 @@
 const catModel = require('../models/catModel.js');
 const {httpError} = require('../utils/errors');
 const { body, validationResult } = require('express-validator');
+var current_user;
 
 const cat_list_get = async (req, res, next) => {
+	current_user = req.user;
+	console.log("req.user", req.user);
 	const cats = await catModel.getAllCats(req.user);
 	if (cats.length > 0) {
 		res.json(cats);
@@ -22,6 +25,8 @@ const cat_get = async (req, res, next) => {
 		next(err);
 		return; //stop the function so that we won't send res twice and get errors
 	};
+	console.log("cat owner:", cat.owner);
+	console.log("user:", current_user.user_id);
 	res.json(cat);
 };
 
@@ -34,7 +39,7 @@ const cat_post = async (req, res, next) => {
 		next(err);
 		return;
 	};
-	console.log('add cat data');
+	//console.log('add cat data');
 	if(!req.file){
 		const err = httpError('Invalid file', 400);
 		next(err);
@@ -43,20 +48,28 @@ const cat_post = async (req, res, next) => {
 	const cat = req.body;
 	cat.filename = req.file.filename;
 	const id = await catModel.insertCat(cat);
-	console.log(req.file, req.body);
+	//console.log(req.file, req.body);
 	res.json({message: `cat created with id: ${id}`, cat_id: id});
 };
 
 const cat_delete = async (req, res) => {
 	const cat = req.body;
-	const id = await catModel.deleteCat(cat.id);
-	res.send(`removed catId ${id}`);
+	console.log('CAT_DELETE', cat); 
+	console.log('CAT_DELETE',req.user);
+	if (cat.owner == req.user.user_id){
+		const id = await catModel.deleteCat(cat.id);
+		res.send(`removed catId ${id}`);
+	} else {
+		console.log('only your cats can be removed')	
+	}
 };
 
 const cat_update_put = async (req, res) => {
 	const cat = req.body;
-	const updated = await catModel.modifyCat(cat);
+	const updated = await catModel.modifyCat(cat, req.user);
 	console.log(req.body, req.file);
+	console.log("cat owner in put method", cat.owner)
+	console.log("user in put method", current_user.user_id);
 	res.send(updated);
 };
 	
