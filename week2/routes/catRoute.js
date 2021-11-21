@@ -5,6 +5,7 @@ const router = express.Router();
 const multer = require('multer');
 const catController = require('../controllers/catController.js');
 const { body, validationResult } = require('express-validator');
+var cors = require('cors');
 
 const fileFilter = (req, file, cb) => {
 	if(file.mimetype.includes('image')){
@@ -29,7 +30,7 @@ router.route('/')
 		body('owner').not().isEmpty(),
 		catController.cat_update_put);
 router.route('/:id')
-	.get(catController.cat_get)
-	.delete(catController.cat_delete);
+	.get(cors(),catController.cat_get)
+	.delete(cors(),catController.cat_delete);
 
 module.exports = router;

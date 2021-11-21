@@ -46,9 +46,9 @@ const insertCat = async (cat) => {
 	};
 };
 
-const deleteCat = async (catId) => {
+const deleteCat = async (cat_id) => {
 	try {
-		const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ?', [catId]);
+		const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ?', [cat_id]);
 		console.log('model delete cat', row);
 		return row.affectedRows === 1;
 	} catch (e) {

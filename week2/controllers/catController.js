@@ -16,6 +16,7 @@ const cat_list_get = async (req, res) => {
 };
 
 const cat_get = async (req, res, next) => {
+	console.log("CAT_GET:");
 	const cat = await catModel.getCat(req.params.id, next);
 	if (!cat) { //undefined value = falsey, or cat === undefined
 		const err = httpError('Cat not found', 404);
@@ -48,8 +49,9 @@ const cat_post = async (req, res, next) => {
 };
 
 const cat_delete = async (req, res) => {
-	const cat = req.body;
-	const id = await catModel.deleteCat(cat.id);
+	const cat_id = req.params.id;
+	console.log('CAT_DELETE',cat_id);
+	const id = await catModel.deleteCat(cat_id);
 	res.send(`removed catId ${id}`);
 };
 

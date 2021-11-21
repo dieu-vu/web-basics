@@ -45,6 +45,7 @@ const createCatCards = (cats) => {
       };
       try {
         const response = await fetch(url + '/cat/' + cat.cat_id, fetchOptions);
+		console.log(response)
         const json = await response.json();
         console.log('delete response', json);
         getCat();
@@ -52,7 +53,6 @@ const createCatCards = (cats) => {
         console.log(e.message);
       }
     });
-
     const li = document.createElement('li');
     li.classList.add('light-border');
 

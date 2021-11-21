@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 const {httpError} = require('./utils/errors');
 
+app.options('*', cors())
 app.use(cors());
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
