@@ -46,9 +46,9 @@ const insertCat = async (cat) => {
 	};
 };
 
-const deleteCat = async (catId) => {
+const deleteCat = async (catId, userId) => {
 	try {
-		const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ?', [catId]);
+		const [row] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ? AND owner = ?', [catId, userId]);
 		console.log('model delete cat', row);
 		return row.affectedRows === 1;
 	} catch (e) {
@@ -60,7 +60,7 @@ const modifyCat = async (cat, user) => {
 	try {
 		let birthdate = (cat.birthdate).toString().substring(0,10);
 		console.log("BIRTHDATE", birthdate);
-		const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate = ? WHERE cat_id = ? AND owner = ?',
+		const [row] = await promisePool.execute('UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate = ? WHERE cat_id = ? ',
 			[cat.name, cat.weight, cat.owner, birthdate, cat.id, user.user_id]);
 		console.log('model modify cat',  row);
 		return row.affectedRows === 1;

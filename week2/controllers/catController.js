@@ -53,19 +53,16 @@ const cat_post = async (req, res, next) => {
 };
 
 const cat_delete = async (req, res) => {
-	const cat = req.body;
-	console.log('CAT_DELETE', cat); 
+	const cat_id = req.params.id;
+	console.log('CAT_DELETE', cat_id); 
 	console.log('CAT_DELETE',req.user);
-	if (cat.owner == req.user.user_id){
-		const id = await catModel.deleteCat(cat.id);
-		res.send(`removed catId ${id}`);
-	} else {
-		console.log('only your cats can be removed')	
-	}
+	const id = await catModel.deleteCat(cat_id, req.user.user_id);
+	res.send(`removed catId ${id}`);
 };
 
 const cat_update_put = async (req, res) => {
 	const cat = req.body;
+	console.log('CAT_PUT', cat);
 	const updated = await catModel.modifyCat(cat, req.user);
 	console.log(req.body, req.file);
 	console.log("cat owner in put method", cat.owner)
