@@ -20,7 +20,7 @@ router.route('/')
 		body('name').not().isEmpty(),
 		body('birthdate').isDate().not().isEmpty(),
 		body('weight').isNumeric().not().isEmpty(),
-		body('owner').not().isEmpty(),
+		//body('owner').not().isEmpty(),
 		catController.cat_post)
 router.route('/:id')
 	.get(catController.cat_get)

@@ -13,6 +13,9 @@ app.use(passport.initialize());
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static('uploads'));
+app.use('/thumbnails', express.static('thumbnails'));
+
 var cats = require('./routes/catRoute.js');
 var users = require('./routes/userRoute.js');
 

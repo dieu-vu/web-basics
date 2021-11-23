@@ -32,7 +32,7 @@ passport.use(new JWTStrategy(
 		secretOrKey: 'foobar'
 	},
 	(jwtPayload, done) => {
-		console.log('jwtpayload', jwtPayload)
+		//console.log('jwtpayload', jwtPayload)
 		return done(null, jwtPayload);
 	}
 )

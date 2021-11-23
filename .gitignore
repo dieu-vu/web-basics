@@ -12,5 +12,6 @@ web_modules/
 week2/.gitignore
 week2/README.md
 
-week2/uploads/*
+*/uploads/*
 !week2/uploads/.gitkeep
+*/thumbnails/*
