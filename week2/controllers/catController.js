@@ -54,12 +54,12 @@ const cat_post = async (req, res, next) => {
 
 	try {
 		const thumb = makeThumbnail(req.file.path, req.file.filename);
-
+		console.log('thumbnail', req.file.path, req.file.filename);
 		const cat = req.body;
 		cat.filename = req.file.filename;
 		cat.owner = req.user.user_id;
-		console.log('cat_post owner', cat);
-		console.log('cat_post owner', req.user.user_id);
+		//console.log('cat_post owner', cat);
+		//console.log('cat_post owner', req.user.user_id);
 
 		const id = await catModel.insertCat(cat);
 		//console.log(req.file, req.body);

@@ -13,5 +13,6 @@ week2/.gitignore
 week2/README.md
 
 */uploads/*
-!week2/uploads/.gitkeep
+!./week2/uploads/.gitkeep
 */thumbnails/*
+

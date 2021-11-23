@@ -12,7 +12,15 @@ const fileFilter = (req, file, cb) => {
 	};
 	cb(null, false);
 };
-const upload = multer({dest:'./uploads/', fileFilter});
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '.jpg') //Appending .jpg
+  }
+})
+const upload = multer({storage: storage, fileFilter});
 
 router.route('/')
 	.get(catController.cat_list_get)
