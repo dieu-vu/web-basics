@@ -6,6 +6,8 @@ const router = express.Router();
 const userController = require('../controllers/userController.js');
 const { body, validationResult } = require('express-validator');
 
+router.get('/token', userController.checkToken);
+
 router.route('/')
 	.get(userController.user_list_get)
 	.post(body('name').isLength({min: 3}).trim().escape(),
@@ -15,5 +17,6 @@ router.route('/')
 
 router.route('/:id')
 	.get(userController.user_get);
+
 
 module.exports = router;
