@@ -1,6 +1,7 @@
 'use strict';
 const cors = require('cors');
 const express = require('express');
+const http = require('http');
 const https = require('https');
 const fs = require('fs');
 
@@ -14,6 +15,12 @@ const options = {
   cert: sslcert
 };
 https.createServer(options, app).listen(8000);
+
+//Force redirection from http to https:
+http.createServer((req, res) => {
+  res.writeHead(301, { 'Location': 'https://localhost:8000' + req.url });
+  res.end();
+}).listen(3000);
 
 const {httpError} = require('./utils/errors');
 const passport = require('./utils/pass');
@@ -31,6 +38,9 @@ app.use('/thumbnails', express.static('thumbnails'));
 var cats = require('./routes/catRoute.js');
 var users = require('./routes/userRoute.js');
 
+app.get('/', (req,res) => {
+	res.send('Hello secure world!')
+});
 app.use('/auth', authRoute);
 app.use('/cat', passport.authenticate('jwt', {session: false}), cats);
 app.use('/user', passport.authenticate('jwt', {session: false}), users);
