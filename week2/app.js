@@ -1,8 +1,20 @@
 'use strict';
 const cors = require('cors');
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
+
 const app = express();
 const port = 3000;
+
+const sslkey = fs.readFileSync('../ssl-key.pem');
+const sslcert = fs.readFileSync('../ssl-cert.pem');
+const options = {
+  key: sslkey,
+  cert: sslcert
+};
+https.createServer(options, app).listen(8000);
+
 const {httpError} = require('./utils/errors');
 const passport = require('./utils/pass');
 const authRoute = require('./routes/authRoute.js');
@@ -33,4 +45,3 @@ app.use((err, req, res, next) => {
 	const status = err.status || 500;
 	res.status(status).json({error: err.message ||"internal error"});
 });
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
