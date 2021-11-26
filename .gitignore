@@ -16,3 +16,8 @@ week2/README.md
 !./week2/uploads/.gitkeep
 */thumbnails/*
 
+.vscode/
+#ignore tls cert and private key
+certrequest.csr
+ssl-cert.pem
+ssl-key.pem
