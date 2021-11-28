@@ -16,7 +16,7 @@ const users = require('./routes/userRoute.js');
 //Load node modules by environment variables:
 var environment = process.env.NODE_ENV || 'development';
 if (environment == 'production') {
-	require('./utils/production')(app, process.env.PORT || 3000, process.env.HTTPS_PORT);
+	require('./utils/production')(app, process.env.PORT, process.env.HTTPS_PORT);
 } else {
 	require('./utils/localhost')(app, process.env.HTTPS_PORT || 8000, process.env.HTTP_PORT || 3000);
 }

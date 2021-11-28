@@ -1,16 +1,15 @@
 'use strict';
 
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
-
-const sslkey = fs.readFileSync('/etc/pki/tls/private/ca.key');
-const sslcert = fs.readFileSync('/etc/pki/tls/certs/ca.crt');
-const options = {
-  key: sslkey,
-  cert: sslcert
-};
 module.export = (app, port, httpsPort) => {
+	const https = require('https');
+	const fs = require('fs');
+
+	const sslkey = fs.readFileSync('/etc/pki/tls/private/ca.key');
+	const sslcert = fs.readFileSync('/etc/pki/tls/certs/ca.crt');
+	const options = {
+	  key: sslkey,
+	  cert: sslcert
+	};
 	app.enable('trust proxy');
 	app.use ((req, res, next) => {
 	  if (req.secure) {
