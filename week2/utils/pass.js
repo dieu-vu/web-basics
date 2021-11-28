@@ -4,6 +4,7 @@ const Strategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const { getUserLogin } = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 // local strategy for username password login
 passport.use(new Strategy(
@@ -15,7 +16,7 @@ passport.use(new Strategy(
         if (!user) {
           return done(null, false, {message: 'Incorrect email.'});
         }
-        if (user.password !== password) {
+        if (!await bcrypt.compare(user.password, password)) {
           return done(null, false, {message: 'Incorrect password.'});
         }
 		delete(user.password);

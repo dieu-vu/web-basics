@@ -1,6 +1,6 @@
 (async () => {
   'use strict';
-  const url = 'http://localhost:3000'; // change url when uploading to server
+  const url = 'https://localhost:8000'; // change url when uploading to server
 
   // check sessionStorage
   if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {

@@ -1,30 +1,22 @@
 'use strict';
+require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
-const http = require('http');
-const https = require('https');
-const fs = require('fs');
-
-const app = express();
-const port = 3000;
-
-const sslkey = fs.readFileSync('../ssl-key.pem');
-const sslcert = fs.readFileSync('../ssl-cert.pem');
-const options = {
-  key: sslkey,
-  cert: sslcert
-};
-https.createServer(options, app).listen(8000);
-
-//Force redirection from http to https:
-http.createServer((req, res) => {
-  res.writeHead(301, { 'Location': 'https://localhost:8000' + req.url });
-  res.end();
-}).listen(3000);
 
 const {httpError} = require('./utils/errors');
 const passport = require('./utils/pass');
 const authRoute = require('./routes/authRoute.js');
+
+const app = express();
+const port = 3000;
+
+//Load node modules by environment variables:
+var environment = process.env.NODE_ENV || 'development';
+if (environment == 'production') {
+	require('./utils/production')(app, process.env.PORT || 3000);
+} else {
+	require('./utils/localhost')(app, process.env.HTTPS_PORT || 8000, process.env.HTTP_PORT || 3000);
+}
 
 app.use(cors());
 app.use(passport.initialize());
@@ -39,7 +31,11 @@ var cats = require('./routes/catRoute.js');
 var users = require('./routes/userRoute.js');
 
 app.get('/', (req,res) => {
-	res.send('Hello secure world!')
+	if (req.secure) {
+		res.send('Hello secure world!')
+	} else {
+		res.send('not secured?');
+	}
 });
 app.use('/auth', authRoute);
 app.use('/cat', passport.authenticate('jwt', {session: false}), cats);
