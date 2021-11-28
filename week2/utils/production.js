@@ -10,7 +10,7 @@ const options = {
   key: sslkey,
   cert: sslcert
 };
-module.export = (app, port) => {
+module.export = (app, port, httpsPort) => {
 	app.enable('trust proxy');
 	app.use ((req, res, next) => {
 	  if (req.secure) {
