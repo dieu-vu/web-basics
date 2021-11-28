@@ -1,6 +1,6 @@
 'use strict';
 
-module.export = (app, port, httpsPort) => {
+module.exports = (app, port, httpsPort) => {
 	const https = require('https');
 	const fs = require('fs');
 
