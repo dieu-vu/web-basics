@@ -9,6 +9,8 @@ const authRoute = require('./routes/authRoute.js');
 
 const app = express();
 const port = 3000;
+const cats = require('./routes/catRoute.js');
+const users = require('./routes/userRoute.js');
 
 //Load node modules by environment variables:
 var environment = process.env.NODE_ENV || 'development';
@@ -27,8 +29,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('uploads'));
 app.use('/thumbnails', express.static('thumbnails'));
 
-var cats = require('./routes/catRoute.js');
-var users = require('./routes/userRoute.js');
+
+app.use('/auth', authRoute);
+app.use('/cat', passport.authenticate('jwt', {session: false}), cats);
+app.use('/user', passport.authenticate('jwt', {session: false}), users);
 
 app.get('/', (req,res) => {
 	if (req.secure) {
@@ -37,9 +41,6 @@ app.get('/', (req,res) => {
 		res.send('not secured?');
 	}
 });
-app.use('/auth', authRoute);
-app.use('/cat', passport.authenticate('jwt', {session: false}), cats);
-app.use('/user', passport.authenticate('jwt', {session: false}), users);
 
 //Handle error 
 app.use((req, res, next) => {
