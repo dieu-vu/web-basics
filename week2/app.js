@@ -38,7 +38,7 @@ app.use('/user', passport.authenticate('jwt', {session: false}), users);
 app.get('/', async (req,res) => {
 	if (req.secure) {
 		res.send('Hello Secure World!');
-		//res.send(await bcrypt.hash('1234',1));
+		//res.send(await bcrypt.hash('1234',10));
 	} else {
 		res.send('not secured?');
 	}
